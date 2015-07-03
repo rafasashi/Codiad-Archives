@@ -1,0 +1,11 @@
+[{ "author" : "Rafasashi",
+    "version": "0.0.1",
+    "name" : "Archives",
+    "url" : "https://github.com/rafasashi/Codiad-Archives",
+    "contextmenu" : [{
+        "action" : "codiad.Unzip.showDialog($('#context-menu').attr('data-path'));",
+        "icon" : "icon-list-add",
+        "applies-to" : "file-only",
+        "title" : "Unzip"
+    }]
+}]
