@@ -20,7 +20,7 @@
 				
 				$source_info=pathinfo($source);
                 
-				if(!isset($source['extension'])||empty($source['extension'])){
+				if(!isset($source_info['extension'])||empty($source_info['extension'])){
 					
 					echo '{"status":"error","message":"Not an archive"}';
 				}
@@ -28,7 +28,7 @@
 					
 					$des = dirname($source);
 					
-					if($source['extension']=='zip') {
+					if($source_info['extension']=='zip') {
 						
 						if(class_exists('ZipArchive') && $zip = new ZipArchive) {
 		
@@ -59,7 +59,7 @@
 					}
 					else
 						
-						echo '{"status":"error","message":"Looks like a .'.$source['extension'].'"}';
+						echo '{"status":"error","message":"Looks like a .'.$source_info['extension'].'"}';
 					}
 				}
             } 
