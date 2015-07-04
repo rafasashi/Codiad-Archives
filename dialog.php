@@ -8,12 +8,12 @@
 
 echo'<form>';
 
-    echo'<label>Unzip</label>';
+    echo'<label>Extract contents</label>';
 	
     //echo'<p>Enter new name</p>';
-    //echo'<input type="text" id="unzip_name" value="'. $_GET['name']'.">';
+    //echo'<input type="text" id="extract_name" value="'. $_GET['name']'.">';
 	
-    echo'<button onclick="codiad.Unzip.unzip(); return false;">Unzip</button>';
+    echo'<button onclick="codiad.Extract.extract(); return false;">Extract here</button>';
 	
     echo'<button onclick="codiad.modal.unload(); return false;">Close</button>';
 	
