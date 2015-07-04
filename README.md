@@ -6,10 +6,10 @@ Only .zip supported for the moment
 
 ##Installation
 
-- Download the zip file and unzip it to your plugin folder.
+- Download the zip file and extract it to your plugin folder.
 
 ##TODO
 
-- Unpack .rar
-- Unpack .tar
-- Unpack all
+- Extract .rar
+- Extract .tar
+- Extract all
