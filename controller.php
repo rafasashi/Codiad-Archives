@@ -26,8 +26,6 @@
 				}
 				else{
 					
-					$contents = file_get_contents($source);
-					
 					$des = dirname($source);
 					
 					if($source['extension']=='zip') {
