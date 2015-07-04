@@ -19,7 +19,7 @@
 				$source = getWorkspacePath($_GET['path']);
 				
 				$source_info=pathinfo($source);
-                vdump($source_info);
+
 				if(!isset($source_info['extension'])||empty($source_info['extension'])){
 					
 					echo '{"status":"error","message":"Not an archive"}';
