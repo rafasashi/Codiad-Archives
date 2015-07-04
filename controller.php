@@ -17,52 +17,53 @@
             if (isset($_GET['path'])) {
                 
 				$source = getWorkspacePath($_GET['path']);
+				
+				$source_info=pathinfo($source);
                 
-				$contents = file_get_contents($source);
-				
-				$des    = dirname($source);
-				
-				if(strpos($contents, 'Rar') !== false){
-					
-					echo '{"status":"error","message":"Looks like a Rar"}';
-				} 
-				elseif (strpos($contents, 'PK') !== false) {
-					
-					//echo '{"status":"success","message":"Looks like a Zip"}';
-					
-					if ($zip = new ZipArchive) {
-	
-
-						if($res = $zip->open($source)){
-
-							// extract it to the path we determined above
-							if($zip->extractTo($des)){
-								
-								echo '{"status":"success","message":"File unziped"}';
-							}
-							else{
-								
-								echo '{"status":"error","message":"Failed to extract contents"}';
-							}
-							
-							$zip->close();
-						  
-						} 
-						else {
-							
-							echo '{"status":"error","message":"Could not open zip archive"}';
-						}
-					}
-					else {
-						
-						echo '{"status":"error","message":"ZipArchive extension missing"}';
-					}
-				}
-				else{
+				if(!isset($source['extension'])||empty($source['extension'])){
 					
 					echo '{"status":"error","message":"Not an archive"}';
 				}
+				else{
+					
+					$contents = file_get_contents($source);
+					
+					$des = dirname($source);
+					
+					if($source['extension']=='zip') {
+						
+						if(class_exists('ZipArchive') && $zip = new ZipArchive) {
+		
+							if($res = $zip->open($source)){
 
+								// extract it to the path we determined above
+								if($zip->extractTo($des)){
+									
+									echo '{"status":"success","message":"File unziped"}';
+								}
+								else{
+									
+									echo '{"status":"error","message":"Failed to extract contents"}';
+								}
+								
+								$zip->close();
+							  
+							} 
+							else {
+								
+								echo '{"status":"error","message":"Could not open zip archive"}';
+							}
+						}
+						else {
+							
+							echo '{"status":"error","message":"ZipArchive extension missing"}';
+						}
+					}
+					else
+						
+						echo '{"status":"error","message":"Looks like a .'.$source['extension'].'"}';
+					}
+				}
             } 
 			else {
 				
