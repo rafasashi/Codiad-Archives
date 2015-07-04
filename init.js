@@ -13,10 +13,10 @@
         curpath = path.split('/').slice(0, -1).join('/')+'/';
 
     $(function() {
-        codiad.Unzip.init();
+        codiad.Extract.init();
     });
 
-    codiad.Unzip = {
+    codiad.Extract = {
         
         path: curpath,
         file: "",
@@ -42,24 +42,24 @@
         
         //////////////////////////////////////////////////////////
         //
-        //  Unzip file
+        //  Extract file
         //
         //  Parameter
         //
         //  path - {String} - File path
-        //  name - {String} - Name of the unzip
+        //  name - {String} - Name of the extract
         //
         //////////////////////////////////////////////////////////
-        unzip: function(path, name) {
+        extract: function(path, name) {
             var _this = this;
             if (typeof(path) == 'undefined') {
                 path = this.file;
             }
             if (typeof(name) == 'undefined') {
-                name = $('#unzip_name').val();
+                name = $('#extract_name').val();
                 codiad.modal.unload();
             }
-            $.getJSON(_this.path+"controller.php?action=unzip&path="+path+"&name="+name, function(json){
+            $.getJSON(_this.path+"controller.php?action=extract&path="+path+"&name="+name, function(json){
                 codiad.message[json.status](json.message);
                 codiad.filemanager.rescan(codiad.project.getCurrent());
             });
