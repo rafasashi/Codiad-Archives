@@ -11,5 +11,5 @@ Only .zip supported for the moment
 ##TODO
 
 - Extract .rar
-- Extract .tar
+- ~~Extract .tar~~
 - Extract all
