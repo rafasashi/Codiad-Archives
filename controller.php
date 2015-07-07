@@ -14,8 +14,8 @@
         
         case 'extract':
 		
-            if (isset($_GET['path'])) {
-                
+			if(isset($_GET['path'])){
+			
 				$source = getWorkspacePath($_GET['path']);
 				
 				$source_info=pathinfo($source);
@@ -52,7 +52,8 @@
 								echo '{"status":"error","message":"Could not open zip archive"}';
 							}
 						}
-					if($source_info['extension']=='tar') {
+					}
+					elseif($source_info['extension']=='tar') {
 						
 						if(class_exists('PharData') && $tar = new PharData($source)) {
 
@@ -76,7 +77,7 @@
 						echo '{"status":"error","message":"Looks like a .'.$source_info['extension'].'"}';
 					}
 				}
-            } 
+			} 
 			else {
 				
                 echo '{"status":"error","message":"Missing Parameter"}';
