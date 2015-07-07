@@ -14,3 +14,4 @@ Only .zip and .tar supported for the moment
 - ~~Extract .tar~~
 - Extract all
 - Open and navigate inside
+- Extract subdirectory only
