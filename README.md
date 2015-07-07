@@ -2,7 +2,10 @@
 
 Unpack archives directly through the filemanager.
 
-Only .zip and .tar supported for the moment
++Supports:
++- .zip
++- .tar
++- .rar
 
 ##Installation
 
