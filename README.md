@@ -2,10 +2,10 @@
 
 Unpack archives directly through the filemanager.
 
-+Supports:
-+- .zip
-+- .tar
-+- .rar
+Supports:
+- .zip
+- .tar
+- .rar
 
 ##Installation
 
