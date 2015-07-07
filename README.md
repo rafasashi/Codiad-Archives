@@ -13,3 +13,4 @@ Only .zip and .tar supported for the moment
 - Extract .rar
 - ~~Extract .tar~~
 - Extract all
+- Open and navigate inside
