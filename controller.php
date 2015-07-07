@@ -52,9 +52,23 @@
 								echo '{"status":"error","message":"Could not open zip archive"}';
 							}
 						}
+					if($source_info['extension']=='tar') {
+						
+						if(class_exists('PharData') && $tar = new PharData($source)) {
+
+							if($tar->extractTo($des)){
+								
+								echo '{"status":"success","message":"File extracted"}';
+							}
+							else{
+								
+								echo '{"status":"error","message":"Failed to extract contents"}';
+							}
+							
+						}
 						else {
 							
-							echo '{"status":"error","message":"ZipArchive extension missing"}';
+							echo '{"status":"error","message":"PharData extension missing or cloud not open tar archive"}';
 						}
 					}
 					else {
