@@ -10,8 +10,11 @@ Only .zip and .tar supported for the moment
 
 ##TODO
 
-- Extract .rar
+- ~~Extract .zip~~
+- - Extract .gzip
+- ~~Extract .rar~~
 - ~~Extract .tar~~
+- Extract .7z
 - Extract all
 - Open and navigate inside
 - Extract subdirectory only
