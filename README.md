@@ -14,7 +14,7 @@ Supports:
 ##TODO
 
 - ~~Extract .zip~~
-- - Extract .gzip
+- Extract .gzip
 - ~~Extract .rar~~
 - ~~Extract .tar~~
 - Extract .7z
