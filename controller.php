@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright (c) Codiad & Rafasashi, distributed
+ * Copyright (c) Codiad, Rafasashi & beli3ver, distributed
  * as-is and without warranty under the MIT License. 
  * See http://opensource.org/licenses/MIT for more information.
  * This information must remain intact.
@@ -9,6 +9,9 @@
 
     require_once('../../common.php');
     checkSession();
+    
+    //need for rar filelist check
+    $error = false;
     
     switch($_GET['action']) {
         
@@ -70,6 +73,44 @@
 						else {
 							
 							echo '{"status":"error","message":"PharData extension missing or cloud not open tar archive"}';
+						}
+					}
+					elseif($source_info['extension']=='rar') {
+						
+						if(class_exists('rar_open') && $rar = new rar_open) {
+		
+							if($res = $rar->open($source)){
+							
+								$entries = rar_list($res);
+								try {
+									foreach ($entries as $entry) {
+									    $entry->extract($des);
+									}
+								} catch (Exception $e) {
+								    $error = true;
+								}
+								
+								// extract it to the path we determined above
+								if($error === false){
+									
+									echo '{"status":"success","message":"File extracted"}';
+								}
+								else{
+									
+									echo '{"status":"error","message":"Failed to extract contents"}';
+								}
+								
+								$rar->close();
+							  
+							} 
+							else {
+								
+								echo '{"status":"error","message":"Could not open rar archive"}';
+							}
+						}
+						else {
+							
+							echo '{"status":"error","message":"Cloud not open rar archive"}';
 						}
 					}
 					else {
