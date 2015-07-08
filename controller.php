@@ -8,8 +8,12 @@
     error_reporting(0);
 
     require_once('../../common.php');
+	
     checkSession();
-    
+	
+	
+	require_once('./functions.php');
+
     //need for rar filelist check
     $error = false;
     
@@ -34,19 +38,80 @@
 					if($source_info['extension']=='zip') {
 						
 						if(class_exists('ZipArchive') && $zip = new ZipArchive) {
-		
-							if($res = $zip->open($source)){
 
-								// extract it to the path we determined above
-								if($zip->extractTo($des)){
+							if($res = $zip->open($source)){
+								
+								$epath = '';
+								
+								if(isset($_GET['epath'])){
 									
-									echo '{"status":"success","message":"File extracted"}';
+									$epath = trim($_GET['epath']);
+								}
+								
+								if($epath!=''&&$epath!='/'){
+									
+									for($i = 0; $i < $zip->numFiles; $i++){
+										
+										$info = $zip->statIndex($i);
+										
+										$entry = $info['name'];
+										
+										$is_dir=false;
+										
+										if($info['crc'] == 0 && substr($entry, -1)=='/'){
+											
+											$is_dir=true;
+										}
+
+										if($entry==$epath){
+											
+											if($is_dir){
+												
+												//-----------recursive extract sub directory---------------
+												
+												// TODO: recursive extract sub directory
+												
+												/*
+												if(recursive_unzip("zip://".$source."#".$epath, $des.'/'.basename($epath)) === TRUE){
+												
+													echo '{"status":"success","message":"Sub contents extracted"}';
+												}
+												else{
+													
+													echo '{"status":"error","message":"Failed to extract sub directory"}';
+												}
+												*/
+											}
+											else{
+												
+												//------------------extract single file---------------
+												
+												if(copy("zip://".$source."#".$epath, $des.'/'.basename($epath)) === TRUE){
+													
+													echo '{"status":"success","message":"Sub contents extracted"}';
+												}
+												else{
+													
+													echo '{"status":"error","message":"Failed to extract sub contents"}';
+												}
+											}
+											
+											break;
+										}										
+									}
 								}
 								else{
 									
-									echo '{"status":"error","message":"Failed to extract contents"}';
+									// extract it to the path we determined above
+									if($zip->extractTo($des)){
+										
+										echo '{"status":"success","message":"Archive extracted"}';
+									}
+									else{
+										
+										echo '{"status":"error","message":"Failed to extract contents"}';
+									}
 								}
-								
 								$zip->close();
 							  
 							} 
@@ -128,27 +193,5 @@
         default:
             echo '{"status":"error","message":"No Type"}';
             break;
-    }
-    
-    
-    function getWorkspacePath($path) {
-		
-		//Security check
-		if (!Common::checkPath($path)) {
-			die('{"status":"error","message":"Invalid path"}');
-		}
-        if (strpos($path, "/") === 0) {
-            //Unix absolute path
-            return $path;
-        }
-        if (strpos($path, ":/") !== false) {
-            //Windows absolute path
-            return $path;
-        }
-        if (strpos($path, ":\\") !== false) {
-            //Windows absolute path
-            return $path;
-        }
-        return WORKSPACE . "/" . $path;
     }
 ?>
