@@ -59,7 +59,7 @@
                 epath = $('#extract_path').val();
                 codiad.modal.unload();
             }
-			console.log(_this.path+"controller.php?action=extract&path="+path+"&epath="+epath);
+	// console.log(_this.path+"controller.php?action=extract&path="+path+"&epath="+epath);
             $.getJSON(_this.path+"controller.php?action=extract&path="+path+"&epath="+epath, function(json){
                 codiad.message[json.status](json.message);
                 codiad.filemanager.rescan(codiad.project.getCurrent());
