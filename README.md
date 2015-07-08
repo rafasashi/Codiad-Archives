@@ -13,11 +13,11 @@ Supports:
 
 ##TODO
 
-- ~~Extract .zip~~
+- ~~Extract .zip~~ -> Extract subZip
 - Extract .gzip
-- ~~Extract .rar~~
-- ~~Extract .tar~~
+- ~~Extract .rar~~ -> Extract subRar
+- ~~Extract .tar~~ -> Extract subTar
 - Extract .7z
 - Extract all
-- Open and navigate inside
+- ~~Open and navigate inside~~ (select markdown implementation)
 - Extract subdirectory only
