@@ -18,5 +18,5 @@ Supports:
 - ~~Extract .rar~~ -> Extract subRar
 - ~~Extract .tar~~ -> Extract subTar
 - Extract .7z
-- ~~Open and navigate inside~~ (select markdown implementation)
+- ~~Open and navigate inside~~ (select markup implementation)
 - Extract subdirectory only
