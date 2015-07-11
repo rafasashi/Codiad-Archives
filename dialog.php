@@ -27,7 +27,7 @@
 			
 			foreach($tree as $name => $path){
 				
-				echo'<option value="'.$path.'">'.$name.'</option>';
+				echo'<option value="'.$path.'">'.htmlentities('├').' '.$name.'</option>';
 			}
 			
 		echo'</select>';
