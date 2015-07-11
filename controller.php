@@ -8,15 +8,18 @@
     error_reporting(0);
 
     require_once('../../common.php');
+	
     checkSession();
-    
+	
+	require_once('./functions.php');
+
     //need for rar filelist check
     $error = false;
     
     switch($_GET['action']) {
         
         case 'extract':
-		
+
 			if(isset($_GET['path'])){
 			
 				$source = getWorkspacePath($_GET['path']);
@@ -34,19 +37,92 @@
 					if($source_info['extension']=='zip') {
 						
 						if(class_exists('ZipArchive') && $zip = new ZipArchive) {
-		
-							if($res = $zip->open($source)){
 
-								// extract it to the path we determined above
-								if($zip->extractTo($des)){
+							if($res = $zip->open($source)){
+								
+								$epath = '';
+								
+								if(isset($_GET['epath'])){
 									
-									echo '{"status":"success","message":"File extracted"}';
+									$epath = trim($_GET['epath']);
+								}
+								
+								if($epath==''||$epath=='/'){
+									
+									// extract all archive to the path we determined above
+									
+									if($zip->extractTo($des)){
+										
+										echo '{"status":"success","message":"Archive extracted"}';
+									}
+									else{
+										
+										echo '{"status":"error","message":"Failed to extract contents"}';
+									}
 								}
 								else{
 									
-									echo '{"status":"error","message":"Failed to extract contents"}';
+									// extract epath to the path we determined above
+									
+									if(substr($epath, -1)!=='/'){
+										
+										//extract single file
+										
+										if(copy("zip://".$source."#".$epath, $des.'/'.basename($epath)) === TRUE){
+											
+											echo '{"status":"success","message":"Sub contents extracted"}';
+										}
+										else{
+											
+											echo '{"status":"error","message":"Failed to extract sub contents"}';
+										}								
+									}
+									else{
+										
+										//extract sub directory recursively
+										
+										$response='{"status":"success","message":"Sub contents extracted"}';
+										
+										for($i = 0; $i < $zip->numFiles; $i++){
+											
+											$info = $zip->statIndex($i);
+											
+											$entry = $info['name'];
+											
+											$is_dir=false;
+											
+											if($info['crc'] == 0 && substr($entry, -1)=='/'){
+												
+												$is_dir=true;
+											}
+											
+											if(strpos($entry,$epath)===0){
+												
+												//get branche path from targeted directory
+												
+												$branche=explode($epath,$entry,2);
+												$branche=$branche[1];												
+												
+												if($is_dir){
+													
+													if($branche!=''&&!is_dir($des.'/'.$branche)&&!mkdir($des.'/'.$branche,0755,true)){
+														
+														$response= '{"status":"error","message":"Failed to create sub directory"}';
+														break;
+													}
+												}
+												elseif(!copy("zip://".$source."#".$entry, $des.'/'.$branche)){
+														
+													$response= '{"status":"error","message":"Failed to copy sub file"}';
+													break;
+												}
+											}										
+										}
+										
+										echo $response;
+									}
 								}
-								
+
 								$zip->close();
 							  
 							} 
@@ -128,27 +204,5 @@
         default:
             echo '{"status":"error","message":"No Type"}';
             break;
-    }
-    
-    
-    function getWorkspacePath($path) {
-		
-		//Security check
-		if (!Common::checkPath($path)) {
-			die('{"status":"error","message":"Invalid path"}');
-		}
-        if (strpos($path, "/") === 0) {
-            //Unix absolute path
-            return $path;
-        }
-        if (strpos($path, ":/") !== false) {
-            //Windows absolute path
-            return $path;
-        }
-        if (strpos($path, ":\\") !== false) {
-            //Windows absolute path
-            return $path;
-        }
-        return WORKSPACE . "/" . $path;
     }
 ?>
