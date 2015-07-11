@@ -27,7 +27,7 @@
         
         //////////////////////////////////////////////////////////
         //
-        //  Show dialog to enter new name
+        //  Show dialog to enter new epath
         //
         //  Parameter
         //
@@ -36,8 +36,8 @@
         //////////////////////////////////////////////////////////
         showDialog: function(path) {
             this.file = path;
-            var name = this.getName(path);
-            codiad.modal.load(400, this.path+"dialog.php?name="+name);
+            var epath = this.getName(path);
+            codiad.modal.load(400, this.path+"dialog.php?path="+path+"&epath="+epath);
         },
         
         //////////////////////////////////////////////////////////
@@ -47,19 +47,20 @@
         //  Parameter
         //
         //  path - {String} - File path
-        //  name - {String} - Name of the extract
+        //  epath - {String} - Archive path
         //
         //////////////////////////////////////////////////////////
-        extract: function(path, name) {
+        extract: function(path, epath) {
             var _this = this;
             if (typeof(path) == 'undefined') {
                 path = this.file;
             }
-            if (typeof(name) == 'undefined') {
-                name = $('#extract_name').val();
+            if (typeof(epath) == 'undefined') {
+                epath = $('#extract_path').val();
                 codiad.modal.unload();
             }
-            $.getJSON(_this.path+"controller.php?action=extract&path="+path+"&name="+name, function(json){
+	// console.log(_this.path+"controller.php?action=extract&path="+path+"&epath="+epath);
+            $.getJSON(_this.path+"controller.php?action=extract&path="+path+"&epath="+epath, function(json){
                 codiad.message[json.status](json.message);
                 codiad.filemanager.rescan(codiad.project.getCurrent());
             });
