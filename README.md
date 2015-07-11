@@ -13,7 +13,7 @@ Supports:
 
 ##TODO
 
-- ~~Extract .zip~~ -> Extract subZip
+- ~~Extract .zip~~ -> ~~Extract subZip~~
 - Extract .gzip
 - ~~Extract .rar~~ -> Extract subRar
 - ~~Extract .tar~~ -> Extract subTar
