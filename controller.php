@@ -47,7 +47,7 @@
 									$epath = trim($_GET['epath']);
 								}
 								
-								if($epath==''||$epath=='/'){
+								if($epath==''||$epath=='/'||$epath==$source_info['basename']){
 									
 									// extract all archive to the path we determined above
 									
