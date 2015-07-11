@@ -59,6 +59,13 @@
 									$name = $zip->getNameIndex($i);
 									$path = $name;
 									
+									$count=substr_count($path, '/');
+									
+									if($count > $level){
+										
+										continue;
+									}
+									
 									$tree[$name]=$path;
 								}								
 								
