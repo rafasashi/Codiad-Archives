@@ -177,6 +177,32 @@
 							echo '{"status":"error","message":"PharData extension missing or cloud not open tar archive"}';
 						}
 					}
+					elseif($source_info['extension']=='bz2') {
+						
+						if(class_exists('PharData') && $bz = new PharData($source)) {
+							
+							if($tar_bzip2_files = $bz->decompress()) {
+								
+								$tar_bzip2 = new PharData($tar_bzip2_files);
+								
+								if($$tar_bzip2->extractTo($des)){
+									echo '{"status":"success","message":"File extracted"}';
+								}
+								else {
+									echo '{"status":"error","message":"Failed to extract the files"}';
+								}
+							}
+							else {
+								echo '{"status":"error","message":"Failed to extract the .bzip2 file"}';
+							}
+							
+
+						}
+						else {
+							
+							echo '{"status":"error","message":"PharData extension missing or cloud not open tar archive"}';
+						}
+					}
 					elseif($source_info['extension']=='rar') {
 						
 						if(class_exists('rar_open') && $rar = new rar_open) {
