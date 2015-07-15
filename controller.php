@@ -151,6 +151,32 @@
 							echo '{"status":"error","message":"PharData extension missing or cloud not open tar archive"}';
 						}
 					}
+					elseif($source_info['extension']=='gz') {
+						
+						if(class_exists('PharData') && $gz = new PharData($source)) {
+							
+							if($tar_gzip_files = $gz->decompress()) {
+								
+								$tar_gzip = new PharData($tar_gzip_files);
+								
+								if($$tar_gzip->extractTo($des)){
+									echo '{"status":"success","message":"File extracted"}';
+								}
+								else {
+									echo '{"status":"error","message":"Failed to extract the files"}';
+								}
+							}
+							else {
+								echo '{"status":"error","message":"Failed to extract the .gzip file"}';
+							}
+							
+
+						}
+						else {
+							
+							echo '{"status":"error","message":"PharData extension missing or cloud not open tar archive"}';
+						}
+					}
 					elseif($source_info['extension']=='rar') {
 						
 						if(class_exists('rar_open') && $rar = new rar_open) {
