@@ -160,7 +160,6 @@
 								$tar_gzip = new PharData($tar_gzip_files);
 								
 								if($$tar_gzip->extractTo($des)){
-									
 									echo '{"status":"success","message":"File extracted"}';
 								}
 								else {
