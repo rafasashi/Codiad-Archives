@@ -1,4 +1,4 @@
-#Unpack archives
+# Unpack archives
 
 Unpack archives directly through the filemanager.
 
@@ -20,7 +20,7 @@ To install the php rar package
 ```bash
 pecl -v install rar 
 ```
-###Activation
+### Activation
 
 To use the plugin you also need to activate it in the php.ini file on your server and put this on the top
 
@@ -43,11 +43,11 @@ Please restart your Server
 /etc/init.d/apache2 restart 
 ```
 
-##Installation
+## Installation
 
 - Download the zip file and extract it to your plugin folder.
 
-##TODO
+## TODO
 
 - ~~Extract .zip~~ -> ~~Extract subZip~~
 - ~~Extract .gzip~~ -> ~~Extract subGZ~~
